@@ -1,0 +1,21 @@
+/* CSS */
+.navbar-light .navbar-nav .nav-link {
+  color: rgba(34, 41, 6, 0.98);
+
+}
+
+.material-icons {
+  vertical-align: middle;
+  color: yellow;
+}
+
+.icon-text {
+  font-size: large;
+  margin: 0 5px;
+  color: yellowgreen;
+}
+
+.active-link {
+  background-color: #081906;
+  border-radius: 10px;
+}

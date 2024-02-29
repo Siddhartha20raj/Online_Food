@@ -1,0 +1,79 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Form on the left -->
+    <div class="col-lg-6">
+      <div class="container py-4" style="max-width: 500px">
+        <br />
+        <h4 class="text-center" style="color: orange">Review Form</h4>
+        <form [formGroup]="addReviewItem">
+          <div class="mb-3">
+            <label class="form-label" for="name">Name</label>
+            <input class="form-control" formControlName="reviewName" id="name" type="text"
+              placeholder="Enter Your Name" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="message">Comments</label>
+            <textarea class="form-control" type="textarea" formControlName="reviewComment"
+              placeholder="Please Provide any Comments for your suggestions"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="message">Review</label>
+            <input class="form-control" type="number" formControlName="reviewStar" min="1" max="5"
+              placeholder="Please Provide the star (1-5)" />
+          </div>
+          <div class="d-grid">
+            <button style="color: white; background-color: orangered" class="btn btn-lg" type="submit"
+              (click)="submitReview()">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Image on the right -->
+    <div class="col-lg-6">
+      <div id="carouselExampleControls" class="carousel slide text-center carousel-dark" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item" [class.active]="i == 0" *ngFor="let rl of reviewlist; let i = index">
+            <img class="rounded-circle shadow-1-strong mb-4" src="assets/images/def_user.png" alt="avatar"
+              style="width: 150px" />
+            <div class="row d-flex justify-content-center">
+              <div class="col-lg-8">
+                <h5 style="color: orangered" class="mb-3">
+                  {{ rl.reviewName }}
+                </h5>
+                <p style="color: grey" class="">
+                  <i class="fas fa-quote-left pe-2"></i>
+                  {{ rl.reviewComment }}
+                </p>
+              </div>
+            </div>
+            <ul class="list-unstyled d-flex justify-content-center text-warning mb-0">
+              <li *ngFor="let rstar of getArray(rl.reviewStar)">
+                <i class="fas fa-star fa-sm"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <button style="background-color: white" class="carousel-control-prev" type="button"
+          data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button style="background-color: white" class="carousel-control-next" type="button"
+          data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <br />
+      <br />
+      <h2 style="text-align: center; color: orange">
+        Thank you for your order!! <br />Please Leave a Review
+      </h2>
+    </div>
+
+    <!-- Form on the right -->
+
+  </div>
+</div>

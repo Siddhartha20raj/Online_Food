@@ -1,0 +1,139 @@
+<nav
+  class="navbar navbar-expand-lg navbar-dark"
+  style="background-color: rgba(34, 41, 6, 0.98)"
+>
+  <div class="container-fluid">
+    <!-- Title on the Left -->
+    <a class="navbar-brand" routerLink="/" style="font-size: 40px">
+      <b style="color: rgb(170, 255, 0); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">FRIENDLY CAFE</b>
+    </a>
+
+    <!-- Toggler Button for Small Screens -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon" style="color: #ffffff"></span>
+    </button>
+
+    <!-- Navigation Items -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Admin Navigation Items -->
+        <li
+          class="nav-item " 
+          *ngIf="adminSession"
+          routerLinkActive="active-link"
+        >
+          <a class="nav-link active" routerLink="/manage-categories">
+            <i class="material-icons">category</i>
+          </a>
+        </li>
+        <li
+          class="nav-item"
+          *ngIf="adminSession"
+          routerLinkActive="active-link"
+        >
+          <a class="nav-link active" routerLink="/view-orders">
+            <i class="material-icons">receipt_long</i>
+          </a>
+        </li>
+        <li
+          class="nav-item"
+          *ngIf="adminSession"
+          routerLinkActive="active-link"
+        >
+          <a class="nav-link active" routerLink="/view-reviews">
+            <i class="material-icons">reviews</i>
+          </a>
+        </li>
+        <li
+          class="nav-item"
+          *ngIf="adminSession"
+          routerLinkActive="active-link"
+        >
+          <a class="nav-link active" routerLink="/manage-queries">
+            <i class="material-icons">contact_support</i>
+          </a>
+        </li>
+
+        <!-- User Navigation Items -->
+        <li class="nav-item" *ngIf="userSession" routerLinkActive="active-link">
+          <a class="nav-link active" routerLink="/foodlist">
+            <i class="material-icons">restaurant_menu</i>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="userSession" routerLinkActive="active-link">
+          <a class="nav-link active" routerLink="/cart">
+            <i class="material-icons">shopping_cart</i>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="userSession" routerLinkActive="active-link">
+          <a class="nav-link active" routerLink="/review">
+            <i class="material-icons">reviews</i>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Right-aligned Navigation Items -->
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item" *ngIf="!adminSession && !userSession">
+          <a
+            class="nav-link active"
+            routerLink="/admin-login-register"
+            routerLinkActive="active-link"
+          >
+            <i class="material-icons">login</i>
+            <span class="icon-text">Admin</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="adminSession">
+          <a
+            class="nav-link active"
+            routerLink="/admin-dashboard"
+            routerLinkActive="active-link"
+          >
+            <i class="material-icons">account_circle</i>
+            <span class="icon-text">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="userSession">
+          <a
+            class="nav-link active"
+            routerLink="/user-dashboard"
+            routerLinkActive="active-link"
+          >
+            <i class="material-icons">account_circle</i>
+            <span class="icon-text">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="adminSession || userSession">
+          <a
+            class="nav-link active"
+            routerLink="/logout"
+            (click)="adminSession ? adminLogout() : userLogout()"
+            routerLinkActive="active-link"
+          >
+            <i class="material-icons">logout</i>
+            <span class="icon-text">Logout</span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="!adminSession && !userSession">
+          <a
+            class="nav-link active"
+            routerLink="/user-login-register"
+            routerLinkActive="active-link"
+          >
+            <i class="material-icons">login</i>
+            <span class="icon-text">User</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,72 @@
+<div class="bg">
+  <div *ngIf="showPasswordForm; then formArea; else mainDashboard"></div>
+  <ng-template #mainDashboard>
+    <h1 style="text-align: center">
+      Welcome
+      <b style="color: orange; text-transform: uppercase">{{ user.name }}!</b>
+    </h1>
+    <div class="container py-5">
+      <div class="row mt-1">
+        <div class="col-md-12" style="display: flex; justify-content: flex-start">
+          <button class="btn btn-primary" (click)="showPasswordForm = !showPasswordForm">
+            <span class="material-icons">edit</span>Edit Password
+          </button>
+        </div>
+      </div>
+      <br />
+      <div class="row mt">
+        <div class="col-md-6" style="padding:10px;" *ngFor="let card of 
+  dashboardCards">
+          <div class="card text-center equal-height-card">
+            <img [src]="card.image" class="card-img-top" [alt]="card.alt" />
+            <div class="card-body">
+              <a [routerLink]="card.routerLink" class="btn btn-primary">
+                {{ card.buttonText }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #formArea>
+    <div class="container mt-5">
+      <form [formGroup]="passwordForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="email" class="form-label" style="color: black;">Email</label>
+          <input type="email" id="email" class="form-control" formControlName="email" readonly />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label" style="color: black;">New Password</label>
+          <input type="password" id="password" class="form-control" formControlName="password" />
+          <div *ngIf="passwordForm.get('password').hasError('required')" class="text-danger">
+            Password is required.
+          </div>
+          <div *ngIf="passwordForm.get('password').hasError('minlength')" class="text-danger">
+            Password must be at least 6 characters long.
+          </div>
+          <div *ngIf="passwordForm.get('password').hasError('pattern')" class="text-danger">
+            Password must contain at least one lowercase letter, one uppercase
+            letter, one digit, and one special character.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label" style="color: black;">Confirm Password</label>
+          <input type="password" id="confirmPassword" class="form-control" formControlName="confirmPassword" />
+          <div *ngIf="passwordForm.get('confirmPassword').hasError('required')" class="text-danger">
+            Confirm Password is required.
+          </div>
+          <div *ngIf="
+   passwordForm.get('confirmPassword').hasError('passwordMismatch')
+   " class="text-danger">
+            Passwords do not match.
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success">Update Password</button>
+        <button type="submit" class="btn btn-warning" (click)="ngOnInit()">
+          Cancel
+        </button>
+      </form>
+    </div>
+  </ng-template>
+</div>

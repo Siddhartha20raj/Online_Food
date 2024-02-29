@@ -1,0 +1,164 @@
+<div class="bg">
+  <div class="main-box">
+    <div class="form-cont">
+      <div class="top-buttons">
+        <button #toSignupButton class="to-signup" (click)="showSignUpForm()">
+          Sign Up
+        </button>
+        <button
+          #toSigninButton
+          class="to-signin top-active-button"
+          (click)="showSignInForm()"
+        >
+          Log In
+        </button>
+      </div>
+
+      <!-- Login Form -->
+      <div #signinForm class="form form-signin">
+        <form [formGroup]="login">
+          <label class="form-label" >E-MAIL</label>
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="Your e-mail"
+          />
+          <div
+            class="alert alert-danger"
+            *ngIf="login.get('email').errors && login.get('email').touched"
+          >
+            * Email is required
+          </div>
+          <label class="form-label">PASSWORD</label>
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Your password"
+          />
+          <div
+            class="alert alert-danger"
+            *ngIf="
+              login.get('password').errors && login.get('password').touched
+            "
+          >
+            * Password is required
+          </div>
+          <input
+            type="button"
+            (click)="loginAdmin()"
+            class="form-btn"
+            value="Log In"
+            [disabled]="!login.valid"
+          />
+          <br /><br />
+          <a (click)="showSignUpForm()" class="lined-link to-signup-link">
+            Create new account
+          </a>
+        </form>
+      </div>
+
+      <!-- Sign Up Form -->
+      <div #signupForm class="form form-signup">
+        <form [formGroup]="addAdmin">
+          <label class="form-label">FULL NAME</label>
+          <input
+            type="text"
+            formControlName="name"
+            placeholder="Your full name"
+          />
+          <div
+            class="alert alert-danger"
+            *ngIf="
+              addAdmin.controls.name.invalid && addAdmin.controls.name.touched
+            "
+          >
+            * Please enter a valid name.
+          </div>
+          <label class="form-label">Employee ID:</label>
+          <input
+            type="text"
+            formControlName="employeeId"
+            placeholder="Employee ID"
+          />
+          <div
+            class="alert alert-danger"
+            *ngIf="
+              addAdmin.controls.employeeId.invalid &&
+              addAdmin.controls.employeeId.touched
+            "
+          >
+            * Employee ID is required.
+          </div>
+
+          <label class="form-label">E-MAIL</label>
+          <input
+            type="email"
+            formControlName="email"
+            placeholder="Your e-mail"
+          />
+          <div
+            class="alert alert-danger"
+            *ngIf="
+              addAdmin.controls.email.invalid && addAdmin.controls.email.touched
+            "
+          >
+            * Email is required
+          </div>
+          <div
+            class="alert alert-danger"
+            *ngIf="addAdmin.get('email')?.errors?.['email']"
+          >
+            * Invalid email format
+          </div>
+          <label class="form-label">PASSWORD</label>
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Your password"
+          />
+          <div
+            class="alert alert-danger"
+            *ngIf="
+              addAdmin.controls.password.invalid &&
+              addAdmin.controls.password.touched
+            "
+          >
+            * Password is required.
+          </div>
+          <div
+            class="alert alert-danger"
+            *ngIf="addAdmin.get('password')?.errors?.['minlength']"
+          >
+            * Password should be at least 6 characters long
+          </div>
+          <div
+            class="alert alert-danger"
+            *ngIf="
+              addAdmin.get('password').touched &&
+              addAdmin.get('password').invalid
+            "
+          >
+            * Password should contain at least 1 upper case, 1 lower case, 1
+            number, and 1 special character
+          </div>
+
+          <input
+            type="button"
+            (click)="registerAdmin()"
+            class="form-btn"
+            value="Sign Up"
+            [disabled]="!addAdmin.valid"
+          />
+          <br /><br />
+          <a (click)="showSignInForm()" class="lined-link to-signin-link">
+            I'm already a member
+          </a>
+          <br />
+          <h2 style="text-align: center; color: red">{{ errorMessage }}</h2>
+          <h2 style="text-align: center; color: green">{{ successMessage }}</h2>
+        </form>
+      </div>
+    </div>
+    <div class="clear-fix"></div>
+  </div>
+</div>

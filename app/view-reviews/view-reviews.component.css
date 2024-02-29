@@ -1,0 +1,28 @@
+.container {
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(153, 13, 132, 0.733);
+  }
+  h2 {
+  color: #042444;
+  }
+  .list-group-item {
+  background-color: #fff;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(179, 4, 185, 0.1);
+  }
+  .row {
+  margin-bottom: 10px;
+  }
+  .col-md-3 {
+  padding: 10px;
+  }
+  .strong {
+  font-weight: bold;
+  }
+  .stars {
+  color: #fdce13;
+  font-size: 1.2rem;
+  margin-right: 5px;
+  }  

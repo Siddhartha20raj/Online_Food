@@ -1,0 +1,27 @@
+<div class="container-fluid bg-white p-0"> 
+  <div class="container-fluid py-5 bg-dark hero-header mb-5"> 
+ 
+   <div class="container my-5 py-5">
+     <div >
+       <div >
+         <h1 class="display-4" style="color: rgb(255, 225, 0); text-align: center;">
+           "FOOD AT YOUR DOOR STEP!"
+         </h1>
+         <p class="text-green mb-4 pb-2" style="text-align: center; color: rgb(179, 242, 55);">
+           Satisfy your cravings effortlessly with our online food delivery service. Choose from a variety of delectable options, place your order online, and relish the joy of a hassle-free culinary journey delivered straight to your door.
+         </p>
+         <p style="text-align: center; color: greenyellow;">"SIGN IN, ORDER, ENJOY!"</p>
+         <div class="d-flex justify-content-center">
+         <a
+           routerLink="/user-login-register"
+           class="btn btn-secondary py-sm-3 px-sm-5 me-3" style="background-color: rgb(80, 140, 39); color: rgb(255, 255, 255);"
+           *ngIf="!(adminSession || userSession)"
+           >Sign in</a
+         >
+       </div>
+       </div>
+   
+   </div>
+
+  </div> 
+</div>

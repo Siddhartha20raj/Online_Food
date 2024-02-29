@@ -1,0 +1,165 @@
+<div class="bg">
+  <div class="main-box">
+  <div class="form-cont">
+  <div class="top-buttons">
+  <button #toSignupButton class="to-signup" (click)="showSignUpForm()">
+  Sign Up
+  </button>
+  <button
+  #toSigninButton
+  class="to-signin top-active-button"
+  (click)="showSignInForm()"
+  >
+  Log In
+  </button>
+  </div>
+  <!-- Login Form -->
+  <div #signinForm class="form form-signin">
+  <form [formGroup]="login">
+  <label>E-MAIL</label>
+  <input
+  type="email"
+  formControlName="email"
+  placeholder="Your e-mail"
+  />
+  <div
+  *ngIf="login.get('email').errors && login.get('email').touched"
+  class="alert alert-danger"
+  >
+  * Email is required
+  </div>
+  <label>PASSWORD</label>
+  <input
+  type="password"
+  formControlName="password"
+  placeholder="Your password"
+  />
+  <div
+  *ngIf="
+  login.get('password').errors && login.get('password').touched
+  "
+  class="alert alert-danger"
+  >
+  * Password is required
+  </div>
+  <input
+  type="button"
+  (click)="userLogin()"
+  class="form-btn"
+  value="Log In"
+  [disabled]="!login.valid"
+  />
+  <br /><br />
+  <a (click)="showSignUpForm()" class="lined-link to-signup-link"
+  >Create a new account</a
+  >
+  </form>
+  </div>
+  <!-- Sign Up Form -->
+  <div #signupForm class="form form-signup">
+  <form [formGroup]="addUser">
+  <label>FULL NAME</label>
+  <input
+  type="text"
+  formControlName="name"
+  placeholder="Your full name"
+  />
+  <div
+  *ngIf="
+  addUser.controls.name.invalid && addUser.controls.name.touched
+  "
+  class="alert alert-danger"
+  >
+  * Please Enter a valid name.
+  </div>
+  <label>E-MAIL</label>
+  <input
+  type="email"
+  formControlName="email"
+  placeholder="Your e-mail"
+  />
+  <div
+  *ngIf="
+  addUser.controls.email.invalid && addUser.controls.email.touched
+  "
+  class="alert alert-danger"
+  >
+  * Email is required.
+  </div>
+  <div
+  class="alert alert-danger"
+  *ngIf="addUser.get('email')?.errors?.['email']"
+  >
+  * Invalid email format
+  </div>
+  <label>PHONE NUMBER</label>
+  <input
+  type="text"
+  formControlName="mobileNumber"
+  placeholder="Your Mobile Number"
+  />
+  <div
+  *ngIf="
+  addUser.controls.mobileNumber.invalid &&
+  addUser.controls.mobileNumber.touched
+  "
+  class="alert alert-danger"
+  >
+  * Mobile Number is required.
+  </div>
+  <div
+  class="alert alert-danger"
+  *ngIf="addUser.get('mobileNumber')?.errors?.['mobileNumber']"
+  >
+  * Mobile Number should contain only numbers and 10 digit long.
+  </div>
+  <label>PASSWORD</label>
+  <input
+  type="password"
+  formControlName="password"
+  placeholder="Your password"
+  />
+  <div
+  *ngIf="
+  addUser.controls.password.invalid &&
+  addUser.controls.password.touched
+  "
+  class="alert alert-danger"
+  >
+  * Password is required.
+  </div>
+  <div
+  class="alert alert-danger"
+  *ngIf="addUser.get('password')?.errors?.['minlength']"
+  >
+  * Password should be at least 6 characters long
+  </div>
+  <div
+  class="alert alert-danger"
+  *ngIf="
+  addUser.get('password').touched && addUser.get('password').invalid
+  "
+  >
+  * Password should contain at least 1 upper case, 1 lower case, 1
+  number, and 1 special character
+  </div>
+  <input
+  type="button"
+  (click)="registerUser()"
+  class="form-btn"
+  value="Sign Up"
+  [disabled]="!addUser.valid"
+  />
+  <br /><br />
+  <a (click)="showSignInForm()" class="lined-link to-signin-link"
+  >Already a member</a
+  >
+  <br />
+  <h2 style="text-align: center; color: green">{{ successMessage }}</h2>
+  <h2 style="text-align: center; color: red">{{ errorMessage }}</h2>
+  </form>
+  </div>
+  </div>
+  <div class="clear-fix"></div>
+  </div>
+</div>

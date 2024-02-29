@@ -1,0 +1,222 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-success">
+  <ul class="navbar-nav category-scroll-container">
+    <li class="nav-item" (click)="filterByCategory(null)">
+      <a class="nav-link" [class.active]="selectedCategory === null">
+        <i class="material-icons" style="color: rgb(238, 239, 232)">all_inclusive</i>
+        <span class="icon-text" style="color: rgb(255, 255, 255); font-family: Arial, Helvetica, sans-serif;">All</span>
+      </a>
+    </li>
+    <li
+      class="nav-item"
+      *ngFor="let category of categories"
+      (click)="filterByCategory(category)"
+    >
+      <a class="nav-link" [class.active]="selectedCategory === category">
+        <i class="material-icons" style="color: rgb(255, 255, 255);">fastfood</i>
+        <span class="icon-text" style="color: rgb(255, 255, 255);">{{ category.name }}</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <!-- Search bar -->
+        <div class="input-group" >
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="searchQuery"
+            placeholder="Search for food items"
+            (input)="applyFilters()"
+          />
+          <button
+            class="btn btn-outline-info"
+            type="button"
+            (click)="searchQuery = ''; applyFilters()"
+          >
+            Clear
+          </button>
+        </div>
+      </div>
+      <div class="col-md-3"></div>
+      <div class="col-md-3">
+        <!-- Filter select -->
+
+        <select
+          class="form-select"
+          id="sortOption"
+          [(ngModel)]="selectedSortOption"
+          (change)="applyFilters()"
+        >
+          <optgroup label="Sort By">
+            <option value="default">Default</option>
+            <option value="lowToHigh">Price: Low to High</option>
+            <option value="highToLow">Price: High to Low</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+
+    <div
+      class="col-md-4 mb-4"
+      *ngFor="let foodItem of filteredFoodItems; let i = index"
+    >
+      <div>
+        <div class="card" >
+          <img
+            src="{{ foodItem.imagePath }}"
+            class="card-img-top card-img"
+            alt="Food Image"
+          />
+          <div class="card-body" style="background-color: rgb(220, 237, 237);">
+            <h3 class="card-title" style="color: rgb(104, 34, 21)">
+              {{ foodItem.name }}
+            </h3>
+            <h4 class="card-title">{{ foodItem.category.name }}</h4>
+            <p class="card-text">{{ foodItem.description }}</p>
+            <div *ngIf="foodItem.offer" style="color: rgb(246, 71, 17);">
+              <del class="text-muted" >
+                Actual Price: {{ foodItem.actualPrice | currency : "INR" }}
+              </del>
+              <p class="card-text">
+                Price:
+                {{
+                  foodItem.actualPrice * (1 - foodItem.offer / 100)
+                    | currency : "INR"
+                }}
+              </p>
+            </div>
+            <div *ngIf="!foodItem.offer">
+              <p class="card-text">&nbsp;</p>
+              <p class="card-text">
+                Price: {{ foodItem.actualPrice | currency : "INR" }}
+              </p>
+            </div>
+            <p class="card-text" >
+              Available Quantity: {{ foodItem.availableQuantity }}
+            </p>
+            <div style="margin: 0 auto; display: flex; align-items: center; " >
+              <div class="input-group mr-2">
+                <div class="input-group-prepend">
+                  <button
+                    class="btn btn-outline-warning "  
+                    type="button"
+                    (click)="decreaseQuantity(i)"
+                    style="border-radius: 30%"
+                  >
+                    -
+                  </button>
+                </div>
+                <input
+                  type="text"
+                  class="form-control text-center"
+                  style="max-width: 50px; border-radius: 50%"
+                  [(ngModel)]="quantities[i]"
+                  readonly
+                  min="1"
+                />
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-outline-success"
+                    type="button"
+                    (click)="increaseQuantity(i)"
+                    style="border-radius: 30%"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              <button
+                class="btn btn-success add-to-cart-button" style= "margin: 5px;"
+                (click)="addToCart(foodItem, quantities[i])"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal"
+  id="successModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="successModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="successModalLabel" style="color: green">
+          Item Added to Cart
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-danger"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="closeSuccessModal()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <h6 style="color: blue">
+          The selected item has been successfully added to your cart.
+        </h6>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-dismiss="modal"
+          (click)="closeSuccessModal()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal"
+  id="alertModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="alertModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="alertModalLabel" style="color: red">
+          Alert!
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-danger"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="closeAlertModal()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <h6 style="color: black">{{ alertMessage }}</h6>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-dismiss="modal"
+          (click)="closeAlertModal()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

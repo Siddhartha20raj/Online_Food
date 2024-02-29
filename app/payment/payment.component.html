@@ -1,0 +1,129 @@
+<div class="container-fluid text-light" style="color: rgb(154, 201, 24); background-color: hsla(180, 62%, 87%, 
+0.536)">
+  <div class="container-xxl py-5">
+    <div class="container">
+      <div class="row g-5 align-items-center">
+        <div class="col-lg-6">
+          <div class="row g-6">
+            <form [formGroup]="regForm" (ngSubmit)="makePayment()" class="mb5">
+              <h2 class="text-center mb-3" style="color: hsl(144, 86%, 51%)">
+                <b>Payment Form</b>
+              </h2>
+              <div class="mb-3 form-floating">
+                <input type="email" id="email" class="form-control" name="email" [value]="email" disabled required />
+                <label for="email" class="form-label">Email:</label>
+              </div>
+              <label for="amount" class="form-label">Amount:</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text">₹</span>
+                <input type="number" id="amount" class="form-control" name="amount" [value]="cartItemsTotalCost()"
+                  required disabled /><!-- [(ngModel)]="amount"-->
+              </div>
+              <div class="mb-3">
+                <label for="contact" class="form-label">Contact:</label>
+                <input type="text" id="contact" class="form-control" name="contact" required [value]="contact"
+                  disabled />
+                <!-- [(ngModel)]="contact" -->
+              </div>
+              <div class="mb-3">
+                <label for="name" class="form-label">Name:</label>
+                <input type="text" id="name" class="form-control" [value]="name" name="name" required
+                  disabled /><!-- [(ngModel)]="name" -->
+              </div>
+              <!-- Additional address details form -->
+              <div class="mb-3">
+                <label for="address" class="form-label is-invalid">Address:</label>
+                <textarea id="address" class="form-control" formControlName="address" name="address" rows="3"
+                  [(ngModel)]="address" required></textarea><!-- [(ngModel)]="address" -->
+                <div class="alert alert-danger" *ngIf="
+regForm.controls.address.touched &&
+regForm.controls.address.invalid
+">
+                  Address should not be blank or invalid
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="city" class="form-label">City:</label>
+                <input type="text" id="city" formControlName="city" class="form-control" name="city" required
+                  pattern="[A-Za-z\s]+" [(ngModel)]="city" />
+                <div class="alert alert-danger"
+                  *ngIf="regForm.controls.city.touched && regForm.controls.city.hasError('pattern')">
+                  Please enter a valid city name (only letters and spaces).
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="state" class="form-label">State:</label>
+                <input type="text" id="state" formControlName="state" class="form-control" name="state" required
+                  pattern="[A-Za-z\s]+" [(ngModel)]="state" />
+                <div class="alert alert-danger"
+                  *ngIf="regForm.controls.state.touched && regForm.controls.state.hasError('pattern')">
+                  Please enter a valid state name (only letters and spaces).
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="zip" class="form-label">ZIP Code:</label>
+                <input type="text" id="zip" formControlName="zip" class="form-control" name="zip" pattern="[0-9]+"
+                  [(ngModel)]="zip" required />
+                <div class="alert alert-danger"
+                  *ngIf="regForm.controls.zip.touched && regForm.controls.zip.hasError('pattern')">
+                  Please enter a valid ZIP code (only numbers).
+                </div>
+              </div>
+
+              <button type="submit" class="btn py-2 ml-2 px-4 mb-5" style="
+margin-left: 10px;
+background-color: #2ad76a;
+border-color: hsl(134, 40%, 46%);
+color: #fff;
+">
+                Pay
+              </button>
+              <button type="button" class="btn btn-secondary py-2 px-4 mb-5" style="
+margin-left: 10px;
+background-color: #2ad76a;
+border-color: hsl(134, 40%, 46%);
+color: #fff;
+" (click)="payWithCash()">
+                Pay with Cash
+              </button>
+              <div class="alert alert-danger">{{ message }}</div>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-6 mt-5">
+          <form class="">
+            <div *ngIf="cartItems.length > 0">
+              <h2 class="text-center mb-3" style="color: #462841">
+                <b>Cart Items</b>
+              </h2>
+              <ul class="list-group">
+                <li *ngFor="let cartItem of cartItems" class="list-groupitem">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <strong>{{ cartItem.foodItem.name }}</strong> -
+                      {{ cartItem.quantity }} pcs
+                    </div>
+                    <div class="col-md-4 text-right">
+                      {{ cartItem.totalFoodItemCost | currency : "INR" }}
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div class="mb-3 mt-3">
+                <h2 class="text-center mb-3" style="color: #4d3875">
+                  <b>Total Amount</b>
+                </h2>
+                <div class="input-group">
+                  <span class="input-group-text">₹</span>
+                  <input type="number" id="amount" class="text-center form-control" [(ngModel)]="amount" name="amount"
+                    [value]="cartItemsTotalCost()" required disabled />
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

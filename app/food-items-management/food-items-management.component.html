@@ -1,0 +1,341 @@
+<!-- Show List of Food Items -->
+<span *ngIf="showList; then listOfFood"></span>
+<ng-template #listOfFood>
+  <div class="row" style="background-color: rgb(195, 221, 242); ">
+    <div class="col-md-10 food-list-container" style="background-color: rgb(253, 255, 240); ">
+      <h2 class="food-list-title" style="color: rgb(255, 45, 45);">
+        List of Food Items -->
+        <span style="text-transform: uppercase; color: rgb(211, 21, 21)">{{
+          selectedCategory.name
+        }}</span>
+      </h2>
+      <br />
+      <div class="food-list-buttons">
+        <div>
+          <button class="btn btn-sm btn-success" (click)="enableAdd()">
+            <div style="font-size: x-large">
+              <span class="material-icons">add</span>Add New Food Item
+            </div>
+          </button>
+        </div>
+      </div>
+      <table
+        class="table table-striped food-list-table"
+        style="color: white; font-size: 24px"
+      >
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Available Quantity</th>
+            <th>Actual Price</th>
+            <th>Offer %</th>
+            <th>Discounted Price</th>
+            <th>Status</th>
+            <th>Toggle Status</th>
+            <th>Image Preview</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let foodItem of foodItems">
+            <td>
+              <h3 class="food-name">{{ foodItem.name }}</h3>
+              <p class="food-description">{{ foodItem.description }}</p>
+            </td>
+            <td>{{ foodItem.availableQuantity }}</td>
+            <td>{{ foodItem.actualPrice | currency : "INR" }}</td>
+            <td>{{ foodItem.offer }}%</td>
+            <td style="color: rgb(18, 141, 18);">
+              {{
+                foodItem.actualPrice * (1 - foodItem.offer / 100)
+                  | currency : "INR"
+              }}
+            </td>
+            <td>
+              <span
+                class="food-status badge badge-{{
+                  foodItem.enabled ? 'success' : 'danger'
+                }}"
+              >
+                {{ foodItem.enabled ? "Enabled" : "Disabled" }}
+              </span>
+            </td>
+            <td>
+              <button
+                class="btn btn-sm {{
+                  !foodItem.enabled ? 'btn-success' : 'btn-danger'
+                }}"
+                (click)="toggleFoodItemStatus(foodItem)"
+              >
+                <span class="material-icons">{{
+                  foodItem.enabled ? "toggle_on" : "toggle_off"
+                }}</span>
+                {{ foodItem.enabled ? "Disable" : "Enable" }}
+              </button>
+            </td>
+            <td>
+              <img
+                src="{{ foodItem.imagePath }}"
+                alt="{{ foodItem.name }}"
+                class="food-image"
+              />
+            </td>
+            <td>
+              <button
+                class="btn btn-sm btn-info"
+                (click)="enableEdit(foodItem)"
+              >
+                <span class="material-icons">edit</span> Edit
+              </button>
+              <button
+                class="btn btn-sm btn-danger" style="margin-top: 10px;"
+                (click)="deleteFoodItem(foodItem.foodItemId)"
+              >
+                <span class="material-icons" >delete</span> Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+    </div>
+  </div>
+</ng-template>
+
+<span *ngIf="showAdd; then addFood"  ></span>
+<ng-template #addFood  >
+  <button
+    class="btn btn-primary btn-sm add-food-back-button"
+    (click)="ngOnInit()"
+  >
+    <span class="material-icons">arrow_back</span> Go Back
+  </button>
+  <br />
+  <div class="row" style="background-color: aliceblue;">
+    <div class="col-md-7 add-food-container">
+      <h2 class="add-food-title" style="color: rgb(7, 198, 7); margin-top: 20px;">Add New Food Details</h2>
+      <br />
+      <form>
+        <div class="form-group">
+          <label for="foodName">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="foodName"
+            name="foodName"
+            [(ngModel)]="newFoodItem.name"
+            required
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="foodDescription">Description</label>
+          <textarea
+            class="form-control"
+            aria-label="With textarea"
+            id="foodDescription"
+            name="foodDescription"
+            [(ngModel)]="newFoodItem.description"
+            required
+          ></textarea>
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="foodActualPrice">Actual Price</label>
+          <input
+            type="number"
+            class="form-control"
+            id="foodActualPrice"
+            name="foodActualPrice"
+            min="0"
+            [(ngModel)]="newFoodItem.actualPrice"
+            required
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="foodOffer">Offer %</label>
+          <input
+            type="number"
+            class="form-control"
+            id="foodOffer"
+            name="foodOffer"
+            min="0"
+            [(ngModel)]="newFoodItem.offer"
+            required
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="foodAvailableQuantity">Available Quantity</label>
+          <input
+            type="number"
+            class="form-control"
+            id="foodAvailableQuantity"
+            name="foodAvailableQuantity"
+            min="1"
+            size="1"
+            [(ngModel)]="newFoodItem.availableQuantity"
+            required
+          />
+        </div>
+        <br />
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="foodEnabled"
+            name="foodEnabled"
+            [(ngModel)]="newFoodItem.enabled"
+          />
+          <label class="form-check-label" for="foodEnabled">Enabled</label>
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="foodimagePath">Image URL</label>
+          <input
+            type="text"
+            class="form-control"
+            id="foodimagePath"
+            name="foodimagePath"
+            [(ngModel)]="newFoodItem.imagePath"
+            required
+          />
+        </div>
+        <br />
+
+        <button
+          type="submit"
+          class="btn btn-success add-food-button"
+          (click)="addFoodItem(newFoodItem)"
+          style="color: white"
+        >
+          <span class="material-icons" style="align-items: center">add</span>
+          Add
+        </button>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<span *ngIf="showEdit; then editFood"></span>
+<ng-template #editFood style="background-color: aliceblue;">
+  <button
+    class="btn btn-secondary btn-sm add-food-back-button"
+    (click)="ngOnInit()"
+  >
+    <span class="material-icons">arrow_back</span> Go Back
+  </button>
+  <br />
+  <div class="row" style="background-color: rgba(240, 248, 255, 0.954);">
+    <div class="col-md-10 add-food-container">
+      <h2 class="add-food-title">Update {{ newFoodItem.name }} Details</h2>
+      <br />
+      <form>
+        <div class="form-group">
+          <label for="foodName">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="foodName"
+            name="foodName"
+            [(ngModel)]="newFoodItem.name"
+            required
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="foodDescription">More Info</label>
+          <textarea
+            class="form-control"
+            aria-label="With textarea"
+            id="foodDescription"
+            name="foodDescription"
+            [(ngModel)]="newFoodItem.description"
+            required
+          ></textarea>
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="foodActualPrice">Actual Price</label>
+          <input
+            type="number"
+            class="form-control"
+            id="foodActualPrice"
+            name="foodActualPrice"
+            min="0"
+            [(ngModel)]="newFoodItem.actualPrice"
+            required
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="foodOffer">Offer %</label>
+          <input
+            type="number"
+            class="form-control"
+            id="foodOffer"
+            name="foodOffer"
+            min="0"
+            [(ngModel)]="newFoodItem.offer"
+            required
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="foodAvailableQuantity">Available Quantity</label>
+          <input
+            type="number"
+            class="form-control"
+            id="foodAvailableQuantity"
+            name="foodAvailableQuantity"
+            min="1"
+            size="1"
+            [(ngModel)]="newFoodItem.availableQuantity"
+            required
+          />
+        </div>
+        <br />
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="foodEnabled"
+            name="foodEnabled"
+            [(ngModel)]="newFoodItem.enabled"
+          />
+          <label class="form-check-label" for="foodEnabled">Enabled</label>
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="foodimagePath">Image URL</label>
+          <input
+            type="text"
+            class="form-control"
+            id="foodimagePath"
+            name="foodimagePath"
+            [(ngModel)]="newFoodItem.imagePath"
+            required
+          />
+        </div>
+        <br />
+        <button
+          type="submit"
+          class="btn btn-success add-food-button"
+          (click)="editFoodItem(newFoodItem)"
+          style="color: white"
+        >
+          <span class="material-icons">edit</span> Update
+        </button>
+      </form>
+    </div>
+  </div>
+</ng-template>

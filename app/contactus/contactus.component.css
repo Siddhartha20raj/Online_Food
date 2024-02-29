@@ -1,0 +1,14 @@
+div,
+input,
+label {
+  /* Styles for div, input, and label elements */
+  color: black;
+  /* Add other styles as needed */
+}
+
+h1 {
+  color: rgb(134, 204, 23);
+  }
+  h5 {
+  color: rgb(122, 26, 190);
+  }

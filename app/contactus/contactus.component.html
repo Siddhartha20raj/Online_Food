@@ -1,0 +1,169 @@
+<div class="container-xxl py-5" style="background-color: aliceblue;">
+  <div class="container">
+    <div class="text-center wow fadeInUp" data-wow-delay="0.1s"></div>
+    <div class="row g-4">
+      <div class="col-12">
+        <div class="row gy-4">
+          <div class="col-md-4">
+            <h5
+              style="color: orangered"
+              class="section-title ff-secondary fw-normal text-start"
+            >
+              Booking
+            </h5>
+            <p style="color: black">
+              <i class="fa fa-envelope-open text-primary me-2"></i
+              ><a href="book@friendlycafe.com">book@friendlycafe.com</a>
+            </p>
+          </div>
+          <div class="col-md-4">
+            <h5
+              style="color: orangered"
+              class="section-title ff-secondary fw-normal text-start"
+            >
+              General
+            </h5>
+            <p style="color: black">
+              <i class="fa fa-envelope-open text-primary me-2"></i
+              ><a href="info@Friendlycafe.com">info@Friendlycafe.com</a>
+            </p>
+          </div>
+          <div class="col-md-4">
+            <h5
+              style="color: orangered"
+              class="section-title ff-secondary fw-normal text-start"
+            >
+              Technical
+            </h5>
+            <p style="color: black">
+              <i class="fa fa-envelope-open text-primary me-2"></i
+              ><a href="tech@Friendlycafe.com">tech@Friendlycafe.com</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="wow fadeInUp" data-wow-delay="0.2s">
+          <form [formGroup]="contactForm" (ngSubmit)="submitForm()">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    placeholder="Your Name"
+                    formControlName="name"
+                  />
+                  <label for="name">Your Name</label>
+                  <div
+                    *ngIf="
+                      contactForm.get('name')?.hasError('required') &&
+                      contactForm.get('name')?.touched
+                    "
+                    class="text-danger"
+                  >
+                    Name is required.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    placeholder="Your Email"
+                    formControlName="email"
+                  />
+                  <label for="email">Your Email</label>
+                  <div
+                    *ngIf="
+                      contactForm.get('email')?.hasError('required') &&
+                      contactForm.get('email')?.touched
+                    "
+                    class="text-danger"
+                  >
+                    Email is required.
+                  </div>
+                  <div
+                    *ngIf="
+                      contactForm.get('email')?.hasError('email') &&
+                      contactForm.get('email')?.touched
+                    "
+                    class="text-danger"
+                  >
+                    Invalid email format.
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="subject"
+                    placeholder="Subject"
+                    formControlName="subject"
+                  />
+                  <label for="subject">Subject</label>
+                  <div
+                    *ngIf="
+                      contactForm.get('subject')?.hasError('required') &&
+                      contactForm.get('subject')?.touched
+                    "
+                    class="text-danger"
+                  >
+                    Subject is required.
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="form-floating">
+                  <textarea
+                    class="form-control"
+                    placeholder="Leave a message here"
+                    id="message"
+                    style="height: 150px"
+                    formControlName="message"
+                  ></textarea>
+                  <label for="message">Message</label>
+                  <div
+                    *ngIf="
+                      contactForm.get('message')?.hasError('required') &&
+                      contactForm.get('message')?.touched
+                    "
+                    class="text-danger"
+                  >
+                    Message is required.
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <button
+                  style="background-color: green; color: white"
+                  class="btn w-100 py-3"
+                  type="submit"
+                  [disabled]="!contactForm.valid"
+                >
+                  Send Message
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6 wow fadeIn" data-wow-delay="0.1s">
+        <iframe
+          class="position-relative rounded w-100 h-100"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29266.760327865108!2d87.3451767!3d23.520089249999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f7704e97a06497%3A0x8a80b878a05abac6!2sBidhannagar%2C%20Durgapur%2C%20West%20Bengal!5e0!3m2!1sen!2sin!4v1708969014633!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          frameborder="0"
+          style="min-height: 350px; border: 0"
+          allowfullscreen=""
+          aria-hidden="false"
+          tabindex="0"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="back">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="h2" style="color: tomato; font-size: 48px; text-align: center">
+        Cuisine Management
+      </h2>
+    </div>
+    <div class="card-body">
+      <h4 style="color: tomato; font-size: x-large">Add New Cuisine</h4>
+
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="newCategoryName"
+          placeholder="Enter cuisine name"
+        />
+        <button
+          class="btn btn-success"
+          type="button"
+          (click)="addCategory(newCategoryName)"
+        >
+          <i class="material-icons">add</i>Add
+        </button>
+      </div>
+      <div class="table-container">
+        <h4 style="color: green">Cuisine List</h4>
+        <table class="table table-bordered scrollable-table">
+          <thead>
+            <tr>
+              <th style="color: #02ff02; font-size: large">Cuisine Name</th>
+              <th class="text-end" style="color: #02ff02">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let category of categories">
+              <td style="text-transform: uppercase; color: black;">{{ category.name }}</td>
+              <td class="text-end">
+                <button
+                  class="btn btn-primary btn-sm"
+                  (click)="manageFoodItems(category.categoryId)"
+                >
+                  <i class="material-icons">restaurant_menu</i
+                  ><span style="font-family: Nunito Sans, sans-serif"
+                    >Manage Food Items</span
+                  >
+                </button>
+                <button
+                  class="btn btn-danger btn-sm"
+                  (click)="deleteCategory(category.categoryId)"
+                >
+                  <i class="material-icons">delete</i>
+                  <span style="font-family: Nunito Sans, sans-serif"
+                    >Delete</span
+                  >
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

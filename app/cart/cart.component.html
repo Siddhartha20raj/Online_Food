@@ -1,0 +1,146 @@
+<div *ngIf="totalCartCost != 0; else emptyCartMessage" class="cart-container">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card cart-card bg-light border-primary">
+        <div class="card-body">
+          <h5 class="card-title text-primary">Your Cart</h5>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Preview</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+                <th scope="col">Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cartItem of cartItems">
+                <td>
+                  <h4 class="item-name">{{ cartItem.foodItem.name }}</h4>
+                  <small class="item-description">{{
+                    cartItem.foodItem.description
+                  }}</small>
+                </td>
+                <td>
+                  <img
+                    src="{{ cartItem.foodItem.imagePath }}"
+                    alt="{{ cartItem.foodItem.name }}"
+                    width="45px"
+                    height="45px"
+                  />
+                </td>
+                <td>
+                  <div class="input-group">
+                    <button
+                      class="btn btn-outline-warning btn-sm"
+                      type="button"
+                      (click)="updateQuantity(cartItem, cartItem.quantity, '-')"
+                    >
+                      -
+                    </button>
+                    <input
+                      type="text"
+                      class="form-control text-center quantity-input"
+                      [(ngModel)]="cartItem.quantity"
+                      readonly
+                    />
+                    <button
+                      class="btn btn-outline-success btn-sm"
+                      type="button"
+                      (click)="updateQuantity(cartItem, cartItem.quantity, '+')"
+                    >
+                      +
+                    </button>
+                  </div>
+                </td>
+                <td class="item-price">
+                  {{
+                    cartItem.foodItem.actualPrice *
+                      (1 - cartItem.foodItem.offer / 100) | currency : "INR"
+                  }}&times;{{ cartItem.quantity }}
+                </td>
+                <td>
+                  <h4 class="item-total">
+                    {{ cartItem.totalFoodItemCost | currency : "INR" }}
+                  </h4>
+                </td>
+                <td>
+                  <button
+                    class="btn btn-danger btn-sm remove-button"
+                    (click)="removeFromCart(cartItem)"
+                  >
+                    <span class="material-icons">delete</span> Remove
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card summary-card bg-light border-success">
+        <div class="card-body">
+          <h5 class="card-title text-success">Cart Summary</h5>
+          <p class="total-items">Total Unique Items: {{ cartItems.length }}</p>
+          <p class="total-cost">
+            Total Cost: {{ totalCartCost | currency : "INR" }}
+          </p>
+          <button
+            class="btn btn-success btn-block checkout-button"
+            (click)="redirectToPayment()"
+          >
+            <span class="material-icons">shopping_cart</span> Checkout
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptyCartMessage>
+  <div class="empty-cart-message text-center">
+    <h2 class="empty-cart-title">Your Cart is Empty 😲</h2>
+    <img
+      src="assets/images/cart.jpg"
+      alt="empty cart T_T"
+      class="empty-cart-image"
+      style="object-fit: contain; width: 1080p; height: 500px"
+    />
+    <p class="empty-cart-text" style="font-size: x-large">
+      Start adding delicious items to your cart!
+    </p>
+  </div>
+</ng-template>
+<div
+  class="modal"
+  id="alertModal"
+  tabindex="-1"
+  role="dialog"
+  [ngClass]="{ 'd-block': showModal }"
+  (click)="closeModal()"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="alertModalLabel">Cart Alert!</h5>
+        <button
+          type="button"
+          class="btn-close btn-light"
+          aria-label="Close"
+          (click)="closeModal()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <h6>{{ alertMessage }}</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+.payment-form {
+  background-color: #3fbd6395;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px hsla(241, 68%, 47%, 0.878);
+  }
+  .payment-form h2 {
+  color: #007bff;
+  }
+  .payment-form label {
+  color: white(210, 53%, 29%, 0.199);
+  }
+  .payment-form .btn-primary {
+  background-color: #0d6efd;
+  color: #fff;
+  }
+  .payment-form .btn-primary:hover {
+  background-color: #0056b3;
+  }
+  .payment-form .btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  }
+  .payment-form .btn-secondary:hover {
+  background-color: #495057;
+  }
+  .payment-form .alert-danger {
+  color: #dc3545;
+  }
+  .payment-form input.form-control[disabled] {
+  background-color: #5a4368;
+  cursor: not-allowed;
+  }
